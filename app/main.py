@@ -4,7 +4,6 @@ from typing import Any
 
 class Dictionary:
     def __init__(self) -> None:
-        # self.value = value
         self.hash_table: list = [None] * 8
         self._dict = dict()
         self.lenght = 0
