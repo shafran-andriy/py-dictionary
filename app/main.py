@@ -36,7 +36,7 @@ class Dictionary:
                     # If we have collision
                     index = random.choice(
                         [index for index in range(len(self.hash_table))
-                         if self.hash_table[index] == None])
+                         if self.hash_table[index] is None])
                     self.hash_table[index] = value
                     self._dict[key] = self.hash_table[index]
             else:
@@ -58,8 +58,7 @@ class Dictionary:
                             # If we have collision
                             index = random.choice(
                             [index for index in range(len(temp_list))
-                             if temp_list[index] is None]
-                            )
+                             if temp_list[index] is None])
                             temp_list[index] = value
                             self._dict[key] = temp_list[index]
                 self.hash_table = temp_list
@@ -89,7 +88,7 @@ class Dictionary:
     def clear(self) -> None:
         self._dict = dict()
         self.hash_table = [None] * 8
-    
+
     def __delitem__() -> None:
         pass
 
