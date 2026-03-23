@@ -20,9 +20,7 @@ class Dictionary:
         return self.lenght
 
     def __setitem__(self, key: Any, value: Any) -> None:
-        
         threshhold = int(len(self.hash_table) * (2 / 3))
-        
         if threshhold > self.count_of_elements(self.hash_table):
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
