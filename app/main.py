@@ -5,7 +5,6 @@ from typing import Any
 class Dictionary:
     def __init__(self) -> None:
         self.hash_table: list = [None] * 8
-        # self._dict = dict()
         self.lenght = 0
 
     @staticmethod
@@ -16,6 +15,17 @@ class Dictionary:
                 count += 1
         return count
 
+    def collision(self,
+                  index: int,
+                  ls:list,
+                  key: Any = 0,
+                  value: Any = 0) -> None:
+        index = random.choice(
+            [i for i in range(len(ls))
+                if ls[i] is None])
+        ls[index] = (key, value)
+        self.lenght += 1
+
     def __len__(self) -> int:
         return self.lenght
 
@@ -23,16 +33,22 @@ class Dictionary:
         threshhold = int(len(self.hash_table) * (2 / 3))
         if threshhold > self.count_of_elements(self.hash_table):
             index = self.__hash__(key) % len(self.hash_table)
-            if self.hash_table[index] is None:
+            if all(x is None for x in self.hash_table):
+                self.hash_table[index] = (key, value)
+                self.lenght += 1
+            elif any(
+                item is not None and item[0] == key
+                for item in self.hash_table
+                ):
+                for item in self.hash_table:
+                    if item[0] == key:
+                        item[1] = value
+            elif self.hash_table[index] is None:
                 self.hash_table[index] = (key, value)
                 self.lenght += 1
             else:
                 # If we have collision
-                index = random.choice(
-                    [index for index in range(len(self.hash_table))
-                        if self.hash_table[index] is None])
-                self.hash_table[index] = (key, value)
-                self.lenght += 1
+                self.collision(index, self.hash_table, key, value)
         else:
             # if we need to resaize hash table
             temp_list = [None] * (len(self.hash_table) * 2)
@@ -40,8 +56,17 @@ class Dictionary:
                 if element is None:
                     continue
                 index = hash(element) % len(temp_list)
-
-                if temp_list[index] is None:
+                if all(x is None for x in self.hash_table):
+                    self.hash_table[index] = (key, value)
+                    self.lenght += 1
+                elif any(
+                    item is not None and item[0] == key
+                    for item in self.hash_table
+                    ):
+                    for item in self.hash_table:
+                        if item[0] == key:
+                            item[1] = value
+                elif temp_list[index] is None:
                     temp_list[index] = element
                 else:
                     index = self.__hash__(key) % len(temp_list)
@@ -49,15 +74,7 @@ class Dictionary:
                         temp_list[index] = element
                     else:
                         # If we have collision
-                        index = random.choice(
-                            [
-                                index
-                                for index in range(len(temp_list))
-                                if temp_list[index] is None
-                            ]
-                        )
-                        temp_list[index] = (key, value)
-                        self.lenght += 1
+                        self.collision(index, temp_list, key, value)
             self.hash_table = temp_list
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
