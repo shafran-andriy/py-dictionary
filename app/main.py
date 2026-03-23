@@ -81,7 +81,7 @@ class Dictionary:
     def __getitem__(self, key: Any) -> Any:
         if key in self._dict:
             return self._dict.get(key)
-        return "Key not found"
+        raise KeyError(key)
 
     def __hash__(self, value: Any) -> int:
         return hash(value)
