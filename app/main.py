@@ -40,9 +40,10 @@ class Dictionary:
                 item is not None
                 and item[0] == key for item in self.hash_table
             ):
-                for item in self.hash_table:
-                    if item[0] == key:
-                        item[1] = value
+                for index, item in enumerate(self.hash_table):
+                    if item is not None:
+                        if item[0] == key:
+                            self.hash_table[index] = (key, value)
             elif self.hash_table[index] is None:
                 self.hash_table[index] = (key, value)
                 self.lenght += 1
@@ -63,9 +64,10 @@ class Dictionary:
                     item is not None
                     and item[0] == key for item in self.hash_table
                 ):
-                    for item in self.hash_table:
-                        if item[0] == key:
-                            item[1] = value
+                    for index, item in enumerate(self.hash_table):
+                        if item is not None:
+                            if item[0] == key:
+                                self.hash_table[index] = (key, value)
                 elif temp_list[index] is None:
                     temp_list[index] = element
                 else:
