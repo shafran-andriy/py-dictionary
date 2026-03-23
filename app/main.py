@@ -56,7 +56,7 @@ class Dictionary:
             for element in self.hash_table:
                 if element is None:
                     continue
-                index = hash(element) % len(temp_list)
+                index = hash(element[0]) % len(temp_list)
                 if all(x is None for x in self.hash_table):
                     self.hash_table[index] = (key, value)
                     self.lenght += 1
