@@ -57,8 +57,9 @@ class Dictionary:
                         else:
                             # If we have collision
                             index = random.choice(
-                            [index for index in range(len(temp_list))
-                             if temp_list[index] is None])
+                                [index for index in range(len(temp_list))
+                                 if temp_list[index] is None]
+                                )
                             temp_list[index] = value
                             self._dict[key] = temp_list[index]
                 self.hash_table = temp_list
