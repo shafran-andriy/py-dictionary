@@ -5,7 +5,7 @@ from typing import Any
 class Dictionary:
     def __init__(self) -> None:
         self.hash_table: list = [None] * 8
-        self._dict = dict()
+        # self._dict = dict()
         self.lenght = 0
 
     @staticmethod
@@ -20,78 +20,75 @@ class Dictionary:
         return self.lenght
 
     def __setitem__(self, key: Any, value: Any) -> None:
-        # if len(self._dict) != 0:
-        self.lenght = len(self._dict)
+        
         threshhold = int(len(self.hash_table) * (2 / 3))
-        if isinstance(value, (list, dict, set, bytearray)):
-            raise TypeError(
-                "Unhashable type: 'list', 'dict', 'set', 'bytearray'")
-        else:
-            if threshhold > self.count_of_elements(self.hash_table):
-                index = self.__hash__(key) % len(self.hash_table)
-                if self.hash_table[index] is None:
-                    self.hash_table[index] = value
-                    self._dict[key] = self.hash_table[index]
-                else:
-                    # If we have collision
-                    index = random.choice(
-                        [index for index in range(len(self.hash_table))
-                         if self.hash_table[index] is None])
-                    self.hash_table[index] = value
-                    self._dict[key] = self.hash_table[index]
+        
+        if threshhold > self.count_of_elements(self.hash_table):
+            index = self.__hash__(key) % len(self.hash_table)
+            if self.hash_table[index] is None:
+                self.hash_table[index] = (key, value)
+                self.lenght += 1
             else:
-                # if we need to resaize hash table
-                temp_list = [None] * (len(self.hash_table) * 2)
-                for element in self.hash_table:
-                    if element is None:
-                        continue
-                    index = hash(element) % len(temp_list)
+                # If we have collision
+                index = random.choice(
+                    [index for index in range(len(self.hash_table))
+                        if self.hash_table[index] is None])
+                self.hash_table[index] = (key, value)
+                self.lenght += 1
+        else:
+            # if we need to resaize hash table
+            temp_list = [None] * (len(self.hash_table) * 2)
+            for element in self.hash_table:
+                if element is None:
+                    continue
+                index = hash(element) % len(temp_list)
 
+                if temp_list[index] is None:
+                    temp_list[index] = element
+                else:
+                    index = self.__hash__(key) % len(temp_list)
                     if temp_list[index] is None:
                         temp_list[index] = element
                     else:
-                        index = self.__hash__(key) % len(temp_list)
-                        if temp_list[index] is None:
-                            temp_list[index] = element
-                            self._dict[key] = temp_list[index]
-                        else:
-                            # If we have collision
-                            index = random.choice(
-                                [
-                                    index
-                                    for index in range(len(temp_list))
-                                    if temp_list[index] is None
-                                ]
-                            )
-                            temp_list[index] = value
-                            self._dict[key] = temp_list[index]
-                self.hash_table = temp_list
-                index = self.__hash__(key) % len(self.hash_table)
-                if self.hash_table[index] is None:
-                    self.hash_table[index] = value
-                else:
-                    index = random.choice(
-                        [i for i in range(len(self.hash_table))
-                         if self.hash_table[i] is None]
-                    )
-                    self.hash_table[index] = value
-
-                self._dict[key] = value
+                        # If we have collision
+                        index = random.choice(
+                            [
+                                index
+                                for index in range(len(temp_list))
+                                if temp_list[index] is None
+                            ]
+                        )
+                        temp_list[index] = (key, value)
+                        self.lenght += 1
+            self.hash_table = temp_list
+            index = self.__hash__(key) % len(self.hash_table)
+            if self.hash_table[index] is None:
+                self.hash_table[index] = (key, value)
+                self.lenght += 1
+            else:
+                index = random.choice(
+                    [i for i in range(len(self.hash_table))
+                        if self.hash_table[i] is None]
+                )
+                self.hash_table[index] = (key, value)
+                self.lenght += 1
 
     def __getitem__(self, key: Any) -> Any:
-        if key in self._dict:
-            return self._dict.get(key)
+        if len(self.hash_table) != 0:
+            for element in self.hash_table:
+                if element is not None:
+                    if key == element[0]:
+                        return element[1]
         raise KeyError(key)
 
     def __hash__(self, value: Any) -> int:
         return hash(value)
 
     def __eq__(self, other: dict) -> None:
-        return self._dict == other
+        return self.hash_table == other
 
     def clear(self) -> None:
-        self._dict = dict()
-        self.hash_table = [None] * 8
+        self.hash_table = [None] * self.lenght
 
     def __delitem__() -> None:
         pass
