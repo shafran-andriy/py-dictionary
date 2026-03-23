@@ -17,7 +17,7 @@ class Dictionary:
 
     def collision(self,
                   index: int,
-                  ls:list,
+                  ls: list,
                   key: Any = 0,
                   value: Any = 0) -> None:
         index = random.choice(
@@ -38,8 +38,7 @@ class Dictionary:
                 self.lenght += 1
             elif any(
                 item is not None and item[0] == key
-                for item in self.hash_table
-                ):
+                for item in self.hash_table):
                 for item in self.hash_table:
                     if item[0] == key:
                         item[1] = value
@@ -61,8 +60,7 @@ class Dictionary:
                     self.lenght += 1
                 elif any(
                     item is not None and item[0] == key
-                    for item in self.hash_table
-                    ):
+                    for item in self.hash_table):
                     for item in self.hash_table:
                         if item[0] == key:
                             item[1] = value
