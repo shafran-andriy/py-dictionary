@@ -38,7 +38,8 @@ class Dictionary:
                 self.lenght += 1
             elif any(
                 item is not None
-                and item[0] == key for item in self.hash_table):
+                and item[0] == key for item in self.hash_table
+            ):
                 for item in self.hash_table:
                     if item[0] == key:
                         item[1] = value
@@ -60,7 +61,8 @@ class Dictionary:
                     self.lenght += 1
                 elif any(
                     item is not None
-                    and item[0] == key for item in self.hash_table):
+                    and item[0] == key for item in self.hash_table
+                ):
                     for item in self.hash_table:
                         if item[0] == key:
                             item[1] = value
