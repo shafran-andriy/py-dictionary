@@ -15,7 +15,7 @@ class Dictionary:
             if element is not None:
                 count += 1
         return count
-    
+
     def __len__(self) -> int:
         return self.lenght
 
@@ -24,16 +24,17 @@ class Dictionary:
         self.lenght = len(self._dict)
         threshhold = int(len(self.hash_table) * (2 / 3))
         if isinstance(value, (list, dict, set, bytearray)):
-            raise TypeError("Unhashable type: 'list', 'dict', 'set', 'bytearray'")
+            raise TypeError(
+                "Unhashable type: 'list', 'dict', 'set', 'bytearray'"
+                )
         else:
-            # c_l = self.count_of_elements(self.hash_table)
             if threshhold > self.count_of_elements(self.hash_table):
                 index = self.__hash__(key) % len(self.hash_table)
-                if self.hash_table[index] == None:
+                if self.hash_table[index] is None:
                     self.hash_table[index] = value
                     self._dict[key] = self.hash_table[index]
                 else:
-                    #If we have collision
+                    # If we have collision
                     index = random.choice(
                         [index for index in range(len(self.hash_table))
                             if self.hash_table[index] == None]
@@ -44,7 +45,7 @@ class Dictionary:
                 # if we need to resaize hash table
                 temp_list = [None] * (len(self.hash_table) * 2)
                 for element in self.hash_table:
-                    if element == None:
+                    if element is None:
                         continue
                     index = hash(element) % len(temp_list)
 
@@ -56,7 +57,7 @@ class Dictionary:
                             temp_list[index] = element
                             self._dict[key] = temp_list[index]
                         else:
-                            #If we have collision
+                            # If we have collision
                             index = random.choice(
                             [index for index in range(len(temp_list))
                                 if temp_list[index] == None]
@@ -69,7 +70,8 @@ class Dictionary:
                     self.hash_table[index] = value
                 else:
                     index = random.choice(
-                        [i for i in range(len(self.hash_table)) if self.hash_table[i] is None]
+                        [i for i in range(len(self.hash_table))
+                        if self.hash_table[i] is None]
                     )
                     self.hash_table[index] = value
 
@@ -80,8 +82,28 @@ class Dictionary:
             return self._dict.get(key)
         return "Key not found"
 
-    def __hash__(self, value) -> int:
+    def __hash__(self, value: Any) -> int:
         return hash(value)
 
     def __eq__(self, other: dict) -> None:
         return self._dict == other
+    
+    def clear(self) -> None:
+        self._dict = dict()
+        self.hash_table = [None] * 8
+        
+    def __delitem__():
+        pass
+    
+    def get():
+        pass
+    
+    def pop():
+        pass
+    
+    def update():
+        pass
+    
+    def __iter__():
+        pass
+
