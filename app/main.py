@@ -25,8 +25,7 @@ class Dictionary:
         threshhold = int(len(self.hash_table) * (2 / 3))
         if isinstance(value, (list, dict, set, bytearray)):
             raise TypeError(
-                "Unhashable type: 'list', 'dict', 'set', 'bytearray'"
-                )
+                "Unhashable type: 'list', 'dict', 'set', 'bytearray'")
         else:
             if threshhold > self.count_of_elements(self.hash_table):
                 index = self.__hash__(key) % len(self.hash_table)
@@ -37,8 +36,7 @@ class Dictionary:
                     # If we have collision
                     index = random.choice(
                         [index for index in range(len(self.hash_table))
-                            if self.hash_table[index] == None]
-                        )
+                         if self.hash_table[index] == None])
                     self.hash_table[index] = value
                     self._dict[key] = self.hash_table[index]
             else:
@@ -53,14 +51,14 @@ class Dictionary:
                         temp_list[index] = element
                     else:
                         index = self.__hash__(key) % len(temp_list)
-                        if temp_list[index] == None:
+                        if temp_list[index] is None:
                             temp_list[index] = element
                             self._dict[key] = temp_list[index]
                         else:
                             # If we have collision
                             index = random.choice(
                             [index for index in range(len(temp_list))
-                                if temp_list[index] == None]
+                             if temp_list[index] is None]
                             )
                             temp_list[index] = value
                             self._dict[key] = temp_list[index]
@@ -71,7 +69,7 @@ class Dictionary:
                 else:
                     index = random.choice(
                         [i for i in range(len(self.hash_table))
-                        if self.hash_table[i] is None]
+                         if self.hash_table[i] is None]
                     )
                     self.hash_table[index] = value
 
@@ -87,23 +85,22 @@ class Dictionary:
 
     def __eq__(self, other: dict) -> None:
         return self._dict == other
-    
+
     def clear(self) -> None:
         self._dict = dict()
         self.hash_table = [None] * 8
-        
-    def __delitem__():
-        pass
     
-    def get():
-        pass
-    
-    def pop():
-        pass
-    
-    def update():
-        pass
-    
-    def __iter__():
+    def __delitem__() -> None:
         pass
 
+    def get() -> None:
+        pass
+
+    def pop() -> None:
+        pass
+
+    def update() -> None:
+        pass
+
+    def __iter__() -> None:
+        pass
