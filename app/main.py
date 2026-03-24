@@ -98,7 +98,8 @@ class Dictionary:
         return self.hash_table == other
 
     def clear(self) -> None:
-        self.hash_table = [None] * self.lenght
+        self.hash_table = [None] * 8
+        self.lenght = 0
 
     def __delitem__(self, value: Any) -> None:
         self.hash_table.remove(value)
@@ -112,8 +113,8 @@ class Dictionary:
     def update(self, key: Any, value: Any) -> list:
         if key in self.get_keys_from_hash_table(self.hash_table):
             for i, item in enumerate(self.hash_table):
-                    if item and item[0] == key:
-                        self.hash_table[i] = (key, value)
+                if item and item[0] == key:
+                    self.hash_table[i] = (key, value)
         return self.hash_table
 
     def __iter__() -> None:
