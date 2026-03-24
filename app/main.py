@@ -28,7 +28,7 @@ class Dictionary:
             [i for i in range(len(ls))
                 if ls[i] is None])
         ls[index] = (key, value)
-        self.lenght += 1
+        # self.lenght += 1
 
     def __len__(self) -> int:
         return self.lenght
@@ -54,6 +54,7 @@ class Dictionary:
             else:
                 # If we have collision
                 self.collision(index, self.hash_table, key, value)
+                self.lenght += 1
         else:
             # if we need to resize hash table
             temp_list = [None] * (len(self.hash_table) * 2)
@@ -68,7 +69,7 @@ class Dictionary:
                         # If we have collision
                         old_key, old_value = element
                         self.collision(index, temp_list, old_key, old_value)
-            # add new element in hash table
+            # add new element in hash table after resize
             self.hash_table = temp_list
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
@@ -112,3 +113,15 @@ class Dictionary:
 
     def __iter__() -> None:
         pass
+
+dictionary = Dictionary()
+dictionary.__setitem__(1, "1")
+dictionary.__setitem__(2, "2")
+dictionary.__setitem__(2, "2222222")
+dictionary.__setitem__(3, "3")
+dictionary.__setitem__(4, "4")
+dictionary.__setitem__(5, "5")
+dictionary.__setitem__(6, "6")
+dictionary.__setitem__(7, "7")
+dictionary.__setitem__(7, "7777777777")
+print(dictionary.hash_table)
