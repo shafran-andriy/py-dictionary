@@ -28,7 +28,6 @@ class Dictionary:
             [i for i in range(len(ls))
                 if ls[i] is None])
         ls[index] = (key, value)
-        # self.lenght += 1
 
     def __len__(self) -> int:
         return self.lenght
@@ -101,17 +100,22 @@ class Dictionary:
     def clear(self) -> None:
         self.hash_table = [None] * self.lenght
 
-    def __delitem__() -> None:
-        pass
+    def __delitem__(self, value: Any) -> None:
+        self.hash_table.remove(value)
 
     def get() -> None:
         pass
 
-    def pop() -> None:
-        pass
+    def pop(self, value: Any) -> list:
+        return self.hash_table.pop(value)
 
-    def update() -> None:
-        pass
+    def update(self, key: Any, value: Any) -> list(tuple | None):
+        if key in self.get_keys_from_hash_table(self.hash_table):
+            for i, item in enumerate(self.hash_table):
+                    if item and item[0] == key:
+                        self.hash_table[i] = (key, value)
+        return self.hash_table
+            
 
     def __iter__() -> None:
         pass
