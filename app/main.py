@@ -70,7 +70,7 @@ class Dictionary:
                         self.collision(idx, temp_list, element[0], element[1])
             # add new element in hash table after resize
             self.hash_table = temp_list
-            self.lenght = self.count_of_elements(self.hash_table) 
+            self.lenght = self.count_of_elements(self.hash_table)
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
                 self.hash_table[index] = (key, value)
