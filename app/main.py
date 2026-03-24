@@ -78,10 +78,6 @@ class Dictionary:
                 self.collision(index, self.hash_table, key, value)
                 self.lenght += 1
             else:
-                # for i, item in enumerate(self.hash_table):
-                #     if item and item[0] == key:
-                #         self.hash_table[i] = (key, value)
-                #         break
                 self.update(key, value)
 
     def __getitem__(self, key: Any) -> Any:
@@ -105,8 +101,12 @@ class Dictionary:
     def __delitem__(self, value: Any) -> None:
         self.hash_table.remove(value)
 
-    def get() -> None:
-        pass
+    def get(self, key: Any) -> Any:
+        if key in self.get_keys_from_hash_table(self.hash_table):
+            for i in self.hash_table:
+                if i is not None:
+                    if i[0] == key:
+                        return i[1]
 
     def pop(self, value: Any) -> list:
         return self.hash_table.pop(value)
