@@ -119,5 +119,6 @@ class Dictionary:
                     break
         return self.hash_table
 
-    def __iter__() -> None:
-        pass
+    def __iter__(self) -> Any:
+        for key in self.hash_table:
+            yield key
