@@ -109,13 +109,12 @@ class Dictionary:
     def pop(self, value: Any) -> list:
         return self.hash_table.pop(value)
 
-    def update(self, key: Any, value: Any) -> list(tuple | None):
+    def update(self, key: Any, value: Any) -> list:
         if key in self.get_keys_from_hash_table(self.hash_table):
             for i, item in enumerate(self.hash_table):
                     if item and item[0] == key:
                         self.hash_table[i] = (key, value)
         return self.hash_table
-            
 
     def __iter__() -> None:
         pass
