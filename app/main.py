@@ -14,6 +14,9 @@ class Dictionary:
             if element is not None:
                 count += 1
         return count
+    
+    def get_keys_from_hash_table(ls: list[tuple | None]) -> list:
+        return [i[0] for i in ls if i is not None]
 
     def collision(self,
                   index: int,
@@ -51,44 +54,30 @@ class Dictionary:
                 # If we have collision
                 self.collision(index, self.hash_table, key, value)
         else:
-            # if we need to resaize hash table
+            # if we need to resize hash table
             temp_list = [None] * (len(self.hash_table) * 2)
             for element in self.hash_table:
                 if element is None:
                     continue
-                index = hash(element) % len(temp_list)
-                if all(x is None for x in self.hash_table):
-                    self.hash_table[index] = (key, value)
-                    self.lenght += 1
-                elif any(
-                    item is not None
-                    and item[0] == key for item in self.hash_table
-                ):
-                    for index, item in enumerate(self.hash_table):
-                        if item is not None:
-                            if item[0] == key:
-                                self.hash_table[index] = (key, value)
-                elif temp_list[index] is None:
-                    temp_list[index] = element
                 else:
-                    index = self.__hash__(key) % len(temp_list)
+                    index = hash(element[0]) % len(temp_list)
                     if temp_list[index] is None:
                         temp_list[index] = element
                     else:
                         # If we have collision
                         self.collision(index, temp_list, key, value)
+            # add new element in hash table
             self.hash_table = temp_list
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
                 self.hash_table[index] = (key, value)
                 self.lenght += 1
-            else:
-                index = random.choice(
-                    [i for i in range(len(self.hash_table))
-                        if self.hash_table[i] is None]
-                )
-                self.hash_table[index] = (key, value)
-                self.lenght += 1
+            elif self.hash_table[index] is not None:
+                if key not in self.get_keys_from_hash_table(self.hash_table):
+                    # If we have collision
+                        self.collision(index, temp_list, key, value)
+                else:
+                    self.hash_table[index] = (key, value)
 
     def __getitem__(self, key: Any) -> Any:
         if len(self.hash_table) != 0:
