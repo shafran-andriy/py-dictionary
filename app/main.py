@@ -14,7 +14,8 @@ class Dictionary:
             if element is not None:
                 count += 1
         return count
-    
+
+    @staticmethod
     def get_keys_from_hash_table(ls: list[tuple | None]) -> list:
         return [i[0] for i in ls if i is not None]
 
@@ -75,7 +76,7 @@ class Dictionary:
             elif self.hash_table[index] is not None:
                 if key not in self.get_keys_from_hash_table(self.hash_table):
                     # If we have collision
-                        self.collision(index, temp_list, key, value)
+                    self.collision(index, temp_list, key, value)
                 else:
                     self.hash_table[index] = (key, value)
 
