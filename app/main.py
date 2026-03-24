@@ -1,3 +1,4 @@
+import random
 from typing import Any
 
 
@@ -23,9 +24,11 @@ class Dictionary:
                   ls: list,
                   key: Any = 0,
                   value: Any = 0) -> None:
-        while ls[index] is not None:
-            index = (index + 1) % len(ls)
+        index = random.choice(
+            [i for i in range(len(ls))
+                if ls[i] is None])
         ls[index] = (key, value)
+        self.lenght += 1
 
     def __len__(self) -> int:
         return self.lenght
@@ -53,31 +56,18 @@ class Dictionary:
                 self.collision(index, self.hash_table, key, value)
         else:
             # if we need to resize hash table
-            # temp_list = [None] * (len(self.hash_table) * 2)
-            # for element in self.hash_table:
-            #     if element is None:
-            #         continue
-            #     else:
-            #         index = hash(element[0]) % len(temp_list)
-            #         if temp_list[index] is None:
-            #             temp_list[index] = element
-            #         else:
-            #             # If we have collision
-            #             old_key, old_value = element
-            #             self.collision(index, temp_list, old_key, old_value)
             temp_list = [None] * (len(self.hash_table) * 2)
-
             for element in self.hash_table:
                 if element is None:
                     continue
-
-                key_old, value_old = element
-                index = hash(key_old) % len(temp_list)
-
-                while temp_list[index] is not None:
-                    index = (index + 1) % len(temp_list)
-
-                temp_list[index] = (key_old, value_old)
+                else:
+                    index = hash(element[0]) % len(temp_list)
+                    if temp_list[index] is None:
+                        temp_list[index] = element
+                    else:
+                        # If we have collision
+                        old_key, old_value = element
+                        self.collision(index, temp_list, old_key, old_value)
             # add new element in hash table
             self.hash_table = temp_list
             index = self.__hash__(key) % len(self.hash_table)
@@ -106,8 +96,7 @@ class Dictionary:
         return self.hash_table == other
 
     def clear(self) -> None:
-        self.hash_table = [None] * 8
-        self.lenght = 0
+        self.hash_table = [None] * self.lenght
 
     def __delitem__() -> None:
         pass
