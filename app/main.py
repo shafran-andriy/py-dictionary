@@ -112,3 +112,15 @@ class Dictionary:
 
     def __iter__() -> None:
         pass
+
+dictionary = Dictionary()
+dictionary.__setitem__(1, "1")
+dictionary.__setitem__(2, "2")
+dictionary.__setitem__(2, "22222222222")
+dictionary.__setitem__(3, "3")
+dictionary.__setitem__(4, "4")
+dictionary.__setitem__(5, "5")
+dictionary.__setitem__(6, "6")
+dictionary.__setitem__(7, "7")
+
+print(dictionary.hash_table)
