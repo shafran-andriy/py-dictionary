@@ -62,25 +62,28 @@ class Dictionary:
                 if element is None:
                     continue
                 else:
-                    index = hash(element[0]) % len(temp_list)
-                    if temp_list[index] is None:
-                        temp_list[index] = element
+                    idx = hash(element[0]) % len(temp_list)
+                    if temp_list[idx] is None:
+                        temp_list[idx] = element
                     else:
                         # If we have collision
-                        old_key, old_value = element
-                        self.collision(index, temp_list, old_key, old_value)
+                        self.collision(idx, temp_list, element[0], element[1])
             # add new element in hash table after resize
             self.hash_table = temp_list
+            self.lenght = self.count_of_elements(self.hash_table)
+            
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
                 self.hash_table[index] = (key, value)
                 self.lenght += 1
-            elif self.hash_table[index] is not None:
-                if key not in self.get_keys_from_hash_table(self.hash_table):
-                    # If we have collision
-                    self.collision(index, temp_list, key, value)
-                else:
-                    self.hash_table[index] = (key, value)
+            elif key not in self.get_keys_from_hash_table(self.hash_table):
+                self.collision(index, self.hash_table, key, value)
+                self.lenght += 1
+            else:
+                for i, item in enumerate(self.hash_table):
+                    if item and item[0] == key:
+                        self.hash_table[i] = (key, value)
+                        break
 
     def __getitem__(self, key: Any) -> Any:
         if len(self.hash_table) != 0:
