@@ -1,4 +1,3 @@
-import random
 from typing import Any
 
 
@@ -24,10 +23,8 @@ class Dictionary:
                   ls: list,
                   key: Any = 0,
                   value: Any = 0) -> None:
-        index = random.choice(
-            [i for i in range(len(ls))
-                if ls[i] is None])
-        ls[index] = (key, value)
+        index = (index + 1) % len(ls)
+        ls[index] = (key, value, self.__hash__(key))
 
     def __len__(self) -> int:
         return self.lenght
@@ -37,7 +34,7 @@ class Dictionary:
         if threshhold > self.count_of_elements(self.hash_table):
             index = self.__hash__(key) % len(self.hash_table)
             if all(x is None for x in self.hash_table):
-                self.hash_table[index] = (key, value)
+                self.hash_table[index] = (key, value, self.__hash__(key))
                 self.lenght += 1
             elif any(
                 item is not None
@@ -46,9 +43,9 @@ class Dictionary:
                 for index, item in enumerate(self.hash_table):
                     if item is not None:
                         if item[0] == key:
-                            self.hash_table[index] = (key, value)
+                            self.hash_table[index] = (key, value, self.__hash__(key))
             elif self.hash_table[index] is None:
-                self.hash_table[index] = (key, value)
+                self.hash_table[index] = (key, value, self.__hash__(key))
                 self.lenght += 1
             else:
                 # If we have collision
@@ -72,7 +69,7 @@ class Dictionary:
             self.lenght = self.count_of_elements(self.hash_table)
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
-                self.hash_table[index] = (key, value)
+                self.hash_table[index] = (key, value, self.__hash__(key))
                 self.lenght += 1
             elif key not in self.get_keys_from_hash_table(self.hash_table):
                 self.collision(index, self.hash_table, key, value)
@@ -115,7 +112,7 @@ class Dictionary:
         if key in self.get_keys_from_hash_table(self.hash_table):
             for i, item in enumerate(self.hash_table):
                 if item and item[0] == key:
-                    self.hash_table[i] = (key, value)
+                    self.hash_table[i] = (key, value, self.__hash__(key))
                     break
         return self.hash_table
 
