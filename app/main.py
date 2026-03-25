@@ -34,7 +34,9 @@ class Dictionary:
         if threshhold > self.count_of_elements(self.hash_table):
             index = self.__hash__(key) % len(self.hash_table)
             if all(x is None for x in self.hash_table):
-                self.hash_table[index] = (key, value, self.__hash__(key))
+                self.hash_table[index] = (key,
+                                          value,
+                                          self.__hash__(key))
                 self.lenght += 1
             elif any(
                 item is not None
@@ -43,9 +45,13 @@ class Dictionary:
                 for index, item in enumerate(self.hash_table):
                     if item is not None:
                         if item[0] == key:
-                            self.hash_table[index] = (key, value, self.__hash__(key))
+                            self.hash_table[index] = (key,
+                                                      value,
+                                                      self.__hash__(key))
             elif self.hash_table[index] is None:
-                self.hash_table[index] = (key, value, self.__hash__(key))
+                self.hash_table[index] = (key,
+                                          value,
+                                          self.__hash__(key))
                 self.lenght += 1
             else:
                 # If we have collision
@@ -69,7 +75,9 @@ class Dictionary:
             self.lenght = self.count_of_elements(self.hash_table)
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
-                self.hash_table[index] = (key, value, self.__hash__(key))
+                self.hash_table[index] = (key,
+                                          value,
+                                          self.__hash__(key))
                 self.lenght += 1
             elif key not in self.get_keys_from_hash_table(self.hash_table):
                 self.collision(index, self.hash_table, key, value)
