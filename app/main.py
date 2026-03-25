@@ -24,7 +24,7 @@ class Dictionary:
                   key: Any = 0,
                   value: Any = 0) -> None:
         index = (index + 1) % len(ls)
-        ls[index] = (key, value, self.__hash__(key))
+        ls[index] = (key, value)
 
     def __len__(self) -> int:
         return self.lenght
@@ -35,8 +35,7 @@ class Dictionary:
             index = self.__hash__(key) % len(self.hash_table)
             if all(x is None for x in self.hash_table):
                 self.hash_table[index] = (key,
-                                          value,
-                                          self.__hash__(key))
+                                          value)
                 self.lenght += 1
             elif any(
                 item is not None
@@ -46,12 +45,10 @@ class Dictionary:
                     if item is not None:
                         if item[0] == key:
                             self.hash_table[index] = (key,
-                                                      value,
-                                                      self.__hash__(key))
+                                                      value)
             elif self.hash_table[index] is None:
                 self.hash_table[index] = (key,
-                                          value,
-                                          self.__hash__(key))
+                                          value)
                 self.lenght += 1
             else:
                 # If we have collision
@@ -76,8 +73,7 @@ class Dictionary:
             index = self.__hash__(key) % len(self.hash_table)
             if self.hash_table[index] is None:
                 self.hash_table[index] = (key,
-                                          value,
-                                          self.__hash__(key))
+                                          value)
                 self.lenght += 1
             elif key not in self.get_keys_from_hash_table(self.hash_table):
                 self.collision(index, self.hash_table, key, value)
@@ -120,7 +116,7 @@ class Dictionary:
         if key in self.get_keys_from_hash_table(self.hash_table):
             for i, item in enumerate(self.hash_table):
                 if item and item[0] == key:
-                    self.hash_table[i] = (key, value, self.__hash__(key))
+                    self.hash_table[i] = (key, value)
                     break
         return self.hash_table
 
