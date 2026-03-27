@@ -34,11 +34,13 @@ class Dictionary:
 
     def __setitem__(self, key: Any, value: Any) -> None:
         threshhold = int(len(self.hash_table) * (2 / 3))
+        hash_key = self.__hash__(key)
         if threshhold > self.count_of_elements(self.hash_table):
-            index = self.__hash__(key) % len(self.hash_table)
+            index = hash_key % len(self.hash_table)
             if all(x is None for x in self.hash_table):
                 self.hash_table[index] = (key,
-                                          value)
+                                          value,
+                                          hash_key)
                 self.lenght += 1
             elif any(
                 item is not None
@@ -48,10 +50,12 @@ class Dictionary:
                     if item is not None:
                         if item[0] == key:
                             self.hash_table[index] = (key,
-                                                      value)
+                                                      value,
+                                                      hash_key)
             elif self.hash_table[index] is None:
                 self.hash_table[index] = (key,
-                                          value)
+                                          value,
+                                          hash_key)
                 self.lenght += 1
             else:
                 # If we have collision
@@ -73,10 +77,11 @@ class Dictionary:
             # add new element in hash table after resize
             self.hash_table = temp_list
             self.lenght = self.count_of_elements(self.hash_table)
-            index = self.__hash__(key) % len(self.hash_table)
+            index = hash_key % len(self.hash_table)
             if self.hash_table[index] is None:
                 self.hash_table[index] = (key,
-                                          value)
+                                          value,
+                                          hash_key)
                 self.lenght += 1
             elif key not in self.get_keys_from_hash_table(self.hash_table):
                 self.collision(index, self.hash_table, key, value)
