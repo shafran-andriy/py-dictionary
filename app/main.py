@@ -98,7 +98,7 @@ class Dictionary:
                 if element is None:
                     break
                 if key == element[0]:
-                    return element[2]
+                    return element[1]
                 index = (index + 1) % len(self.hash_table)
                 if index == start:
                     break
