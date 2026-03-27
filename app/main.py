@@ -91,17 +91,10 @@ class Dictionary:
 
     def __getitem__(self, key: Any) -> Any:
         if len(self.hash_table) != 0:
-            index = self.__hash__(key) % len(self.hash_table)
-            start = index
-            while True:
-                element = self.hash_table[index]
-                if element is None:
-                    break
-                if key == element[0]:
-                    return element[1]
-                index = (index + 1) % len(self.hash_table)
-                if index == start:
-                    break
+            for element in self.hash_table:
+                if element is not None:
+                    if key == element[0]:
+                        return element[1]
         raise KeyError(key)
 
     def __hash__(self, value: Any) -> int:
