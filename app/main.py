@@ -107,8 +107,10 @@ class Dictionary:
         self.hash_table = [None] * 8
         self.lenght = 0
 
-    def __delitem__(self, value: Any) -> None:
-        self.hash_table.remove(value)
+    def __delitem__(self, key: Any) -> None:
+        for item in self.hash_table:
+            if item[0] == key:
+                self.hash_table.remove(item)
 
     def get(self, key: Any) -> Any:
         if key in self.get_keys_from_hash_table(self.hash_table):
