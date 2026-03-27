@@ -1,3 +1,4 @@
+import random
 from typing import Any
 
 
@@ -23,7 +24,9 @@ class Dictionary:
                   ls: list,
                   key: Any = 0,
                   value: Any = 0) -> None:
-        index = (index + 1) % len(ls)
+        index = random.choice(
+            [i for i in range(len(ls))
+                if ls[i] is None])
         ls[index] = (key, value)
 
     def __len__(self) -> int:
