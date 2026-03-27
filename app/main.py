@@ -100,8 +100,13 @@ class Dictionary:
     def __hash__(self, value: Any) -> int:
         return hash(value)
 
-    def __eq__(self, other: dict) -> None:
-        return self.hash_table == other
+    def __eq__(self, other: list[tuple]) -> bool:
+        for i in range(len(self.hash_table)):
+            if (self.hash_table[i][0] != other[i][0] 
+                or self.hash_table[i][1] != other[i][1]
+                or self.hash_table[i][2] != other[i][2]):
+                return False
+        return True
 
     def clear(self) -> None:
         self.hash_table = [None] * 8
@@ -119,8 +124,10 @@ class Dictionary:
                     if i[0] == key:
                         return i[1]
 
-    def pop(self, value: Any) -> list:
-        return self.hash_table.pop(value)
+    def pop(self, key: Any) -> list:
+        for i, item in enumerate(self.hash_table):
+            if item[0] == key:
+                return self.hash_table.pop(i)
 
     def update(self, key: Any, value: Any) -> list:
         if key in self.get_keys_from_hash_table(self.hash_table):
@@ -132,4 +139,7 @@ class Dictionary:
 
     def __iter__(self) -> Any:
         for key in self.hash_table:
-            yield key
+            if key == None:
+                continue
+            else:
+                yield key[0]
