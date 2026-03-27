@@ -102,9 +102,11 @@ class Dictionary:
 
     def __eq__(self, other: list[tuple]) -> bool:
         for i in range(len(self.hash_table)):
-            if (self.hash_table[i][0] != other[i][0] 
+            if (
+                self.hash_table[i][0] != other[i][0]
                 or self.hash_table[i][1] != other[i][1]
-                or self.hash_table[i][2] != other[i][2]):
+                or self.hash_table[i][2] != other[i][2]
+            ):
                 return False
         return True
 
@@ -139,7 +141,7 @@ class Dictionary:
 
     def __iter__(self) -> Any:
         for key in self.hash_table:
-            if key == None:
+            if key is None:
                 continue
             else:
                 yield key[0]
