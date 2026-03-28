@@ -90,14 +90,13 @@ class Dictionary:
                 self.update(key, value)
 
     def __getitem__(self, key: Any) -> Any:
-        index = hash(key) % len(self.hash_table)
-        while True:
-            element = self.hash_table[index]
-            if element is None:
-                raise KeyError(key)
-            if element[0] == key:
-                return element[1]
-            index = (index + 1) % len(self.hash_table)
+        if len(self.hash_table) != 0:
+            for element in self.hash_table:
+                if element is not None:
+                    if key == element[0] \
+                    and self.__hash__(key) == element[2]:
+                        return element[1]
+        raise KeyError(key)
 
     def __hash__(self, value: Any) -> int:
         return hash(value)
