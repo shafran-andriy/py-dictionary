@@ -135,10 +135,13 @@ class Dictionary:
                 return self.hash_table.pop(i)
 
     def update(self, key: Any, value: Any) -> list:
+        hash_key = self.__hash__(key)
         if key in self.get_keys_from_hash_table(self.hash_table):
             for i, item in enumerate(self.hash_table):
                 if item and item[0] == key:
-                    self.hash_table[i] = (key, value)
+                    self.hash_table[i] = (key,
+                                          value,
+                                          hash_key)
                     break
         return self.hash_table
 
