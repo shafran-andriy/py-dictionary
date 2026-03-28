@@ -93,8 +93,10 @@ class Dictionary:
         if len(self.hash_table) != 0:
             for element in self.hash_table:
                 if element is not None:
-                    if key == element[0] \
-                    and self.__hash__(key) == element[2]:
+                    if (
+                        key == element[0]
+                        and self.__hash__(key) == element[2]
+                    ):
                         return element[1]
         raise KeyError(key)
 
