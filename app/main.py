@@ -68,7 +68,7 @@ class Dictionary:
                     if temp_list[idx] is None:
                         temp_list[idx] = element
                     else:
-                        # If we have collision
+                        # if we have collision
                         self.collision(idx, temp_list, element[0], element[1])
             # add new element in hash table after resize
             self.hash_table = temp_list
