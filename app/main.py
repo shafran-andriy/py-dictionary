@@ -42,16 +42,12 @@ class Dictionary:
                                           value,
                                           hash_key)
                 self.lenght += 1
+            # update value if key is equal
             elif any(
                 item is not None
                 and item[0] == key for item in self.hash_table
             ):
-                for index, item in enumerate(self.hash_table):
-                    if item is not None:
-                        if item[0] == key:
-                            self.hash_table[index] = (key,
-                                                      value,
-                                                      hash_key)
+                self.update(key, value)
             elif self.hash_table[index] is None:
                 self.hash_table[index] = (key,
                                           value,
@@ -90,14 +86,16 @@ class Dictionary:
                 self.update(key, value)
 
     def __getitem__(self, key: Any) -> Any:
-        if len(self.hash_table) != 0:
-            for element in self.hash_table:
-                if element is not None:
-                    if (
-                        key == element[0]
-                        # and self.__hash__(key) == element[2]
-                    ):
-                        return element[1]
+        if len(self.hash_table) == 0:
+            raise KeyError(key)
+        hash_key = self.__hash__(key)
+        start_index = hash_key % len(self.hash_table)
+        for i in range(len(self.hash_table)):
+            current_index = (start_index + i) % len(self.hash_table)
+            element = self.hash_table[current_index]
+            if element is not None:
+                if key == element[0]:
+                    return element[1]
         raise KeyError(key)
 
     def __hash__(self, value: Any) -> int:
