@@ -1,5 +1,5 @@
 import random
-from typing import Any
+from typing import Any, Hashable
 
 
 class Dictionary:
@@ -9,20 +9,16 @@ class Dictionary:
 
     @staticmethod
     def count_of_elements(ls: list) -> int:
-        count = 0
-        for element in ls:
-            if element is not None:
-                count += 1
-        return count
+        return sum(1 for element in ls if element is not None)
 
     @staticmethod
-    def get_keys_from_hash_table(ls: list[tuple | None]) -> list:
-        return [i[0] for i in ls if i is not None]
+    def get_keys_from_hash_table(hash_list: list[tuple | None]) -> list:
+        return [item[0] for item in hash_list if item is not None]
 
     def collision(self,
                   index: int,
                   ls: list,
-                  key: Any = 0,
+                  key: Hashable = 0,
                   value: Any = 0) -> None:
         index = random.choice(
             [i for i in range(len(ls))
@@ -32,7 +28,7 @@ class Dictionary:
     def __len__(self) -> int:
         return self.lenght
 
-    def __setitem__(self, key: Any, value: Any) -> None:
+    def __setitem__(self, key: Hashable, value: Any) -> None:
         threshhold = int(len(self.hash_table) * (2 / 3))
         hash_key = self.__hash__(key)
         if threshhold > self.count_of_elements(self.hash_table):
@@ -85,7 +81,7 @@ class Dictionary:
             else:
                 self.update(key, value)
 
-    def __getitem__(self, key: Any) -> Any:
+    def __getitem__(self, key: Hashable) -> Any:
         if len(self.hash_table) == 0:
             raise KeyError(key)
         hash_key = self.__hash__(key)
@@ -115,24 +111,17 @@ class Dictionary:
         self.hash_table = [None] * 8
         self.lenght = 0
 
-    def __delitem__(self, key: Any) -> None:
+    def __delitem__(self, key: Hashable) -> None:
         for item in self.hash_table:
             if item[0] == key:
                 self.hash_table.remove(item)
 
-    def get(self, key: Any) -> Any:
-        if key in self.get_keys_from_hash_table(self.hash_table):
-            for i in self.hash_table:
-                if i is not None:
-                    if i[0] == key:
-                        return i[1]
-
-    def pop(self, key: Any) -> list:
+    def pop(self, key: Hashable) -> Any | None:
         for i, item in enumerate(self.hash_table):
             if item[0] == key:
                 return self.hash_table.pop(i)
 
-    def update(self, key: Any, value: Any) -> list:
+    def update(self, key: Hashable, value: Any) -> list:
         hash_key = self.__hash__(key)
         if key in self.get_keys_from_hash_table(self.hash_table):
             for i, item in enumerate(self.hash_table):
